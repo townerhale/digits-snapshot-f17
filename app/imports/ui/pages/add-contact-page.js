@@ -36,20 +36,26 @@ Template.Add_Contact_Page.events({
     const telephone = event.target.Telephone.value;
     const email = event.target.Email.value;
 
-    const newContactData = { first, last, address, telephone, email };
+
     // Clear out any old validation errors.
-    instance.context.resetValidation();
-    // Invoke clean so that newStudentData reflects what will be inserted.
-    ContactsSchema.clean(newContactData);
-    // Determine validity.
-    instance.context.validate(newContactData);
-    if (instance.context.isValid()) {
-      Contacts.insert(newContactData);
-      instance.messageFlags.set(displayErrorMessages, false);
-      FlowRouter.go('Home_Page');
-    } else {
-      instance.messageFlags.set(displayErrorMessages, true);
-    }
+
+
+      const newContactData = { first, last, address, telephone, email };
+
+
+      instance.context.resetValidation();
+      // Invoke clean so that newStudentData reflects what will be inserted.
+      ContactsSchema.clean(newContactData);
+      // Determine validity.
+      instance.context.validate(newContactData);
+      if (instance.context.isValid() && Contacts.findOne({first, last} === 1)) {
+        Contacts.insert(newContactData);
+        instance.messageFlags.set(displayErrorMessages, false);
+        FlowRouter.go('Home_Page');
+      }
+      else {
+        instance.messageFlags.set(displayErrorMessages, true);
+      }
   },
 });
 
