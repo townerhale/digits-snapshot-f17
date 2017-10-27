@@ -29,7 +29,7 @@ export const ContactsSchema = new SimpleSchema({
   },
   telephone: {
     label: 'telephone',
-    type: String,
+    type: Number,
     optional: false,
     max: 200,
   },
